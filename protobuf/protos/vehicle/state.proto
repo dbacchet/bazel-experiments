@@ -1,0 +1,37 @@
+syntax = "proto3";
+
+import "common.proto";
+// import "google/protobuf/timestamp.proto";
+
+package vehicle;
+
+message State {
+  // google.protobuf.Timestamp timestamp = 1;
+  math.Pose pose = 2;
+  math.Screw twist = 3;
+}
+
+enum AgentClass {
+    VEHICLE = 0;
+    PEDESTRIAN = 1;
+    UNKNOWN = 2;  // Note: vehicle is the default!
+    LARGE_VEHICLE = 3;
+    BICYCLE = 4;
+    MOTORCYCLE = 5;
+    GOLF_CART = 6;
+}
+
+message AgentClassProb {
+    AgentClass class = 1;
+    double prob = 2;
+}
+
+message Agent {
+    // google.protobuf.Timestamp timestamp = 1;
+    int64 id = 2;
+    math.Pose pose = 3;
+    math.Screw twist = 4;
+    double existence_probability = 5;
+    repeated AgentClassProb class_probabilities = 6;
+}
+

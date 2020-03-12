@@ -1,0 +1,21 @@
+
+config_setting (
+  name = "macos",
+  constraint_values = [ "@bazel_tools//platforms:osx" ]
+)
+
+config_setting (
+  name = "linux",
+  constraint_values = [ "@bazel_tools//platforms:linux" ]
+)
+
+cc_library(
+    name = 'pybind11',
+    hdrs = glob(["pybind11-2.4.3/include/pybind11/**/*"]),
+    strip_include_prefix = 'pybind11-2.4.3/include',
+    visibility = ["//visibility:public"],
+    deps = select({
+       ":linux" : ["@python_runtime_linux//:python27-lib"],
+       ":macos" : ["@python_runtime_macos//:python27-lib"],
+       }),
+)

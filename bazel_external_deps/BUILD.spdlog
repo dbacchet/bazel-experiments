@@ -1,0 +1,21 @@
+filegroup(
+    name = "spdlog-headers",
+    srcs = glob(['spdlog-1.5.0/include/spdlog/**/*.h']),
+)
+
+cc_library(
+    name = 'spdlog',
+    hdrs = [':spdlog-headers'],
+    strip_include_prefix = 'spdlog-1.5.0/include',
+    srcs = ['spdlog-1.5.0/src/spdlog.cpp',
+            'spdlog-1.5.0/src/stdout_sinks.cpp',
+            'spdlog-1.5.0/src/color_sinks.cpp',
+            'spdlog-1.5.0/src/file_sinks.cpp',
+            'spdlog-1.5.0/src/async.cpp',
+            'spdlog-1.5.0/src/fmt.cpp',
+            ],
+    linkstatic = True,
+    defines = ['SPDLOG_COMPILED_LIB'],
+    visibility = ['//visibility:public'],
+)
+
