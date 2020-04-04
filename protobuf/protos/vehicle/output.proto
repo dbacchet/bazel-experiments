@@ -1,0 +1,17 @@
+syntax = "proto3";
+
+import "common.proto";
+
+package vehicle;
+
+message CartesianState {
+    math.Vec3 position = 1;
+    double yaw = 2;
+    double speed = 3;
+}
+
+message Debug {
+    CartesianState current_state = 1;
+    repeated string messages = 2;
+}
+
