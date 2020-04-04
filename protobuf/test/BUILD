@@ -17,3 +17,15 @@ py_test(
             ],
     python_version = 'PY2',
 )
+
+py_test(
+    name = 'test_consumer_py',
+    srcs = ['test_consumer.py',
+            ],
+    main = 'test_consumer.py',
+    deps = [
+            '//protobuf/protos:protos_pkg',
+            '//protobuf/sample_consumer:consumer_pkg',
+            ],
+    python_version = 'PY2',
+)
