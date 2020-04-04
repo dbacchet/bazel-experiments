@@ -1,6 +1,5 @@
 from __future__ import division
 
-import numpy as np
 from protos import common_pb2
 from protos import state_pb2
 

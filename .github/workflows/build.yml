@@ -1,0 +1,40 @@
+name: build
+
+on:
+  push:
+  pull_request:
+  release:
+    types:
+      - created
+
+jobs:
+
+  linux:
+    timeout-minutes: 50
+
+    strategy:
+      matrix:
+        os: [ubuntu-16.04, ubuntu-18.04]
+        # compiler: [g++, clang++]
+
+    runs-on: ${{ matrix.os }}
+
+    steps:
+    - uses: actions/checkout@v1
+    - name: Install system dependencies
+      run: |
+           sudo apt update
+           sudo apt install -y wget lcov default-jdk
+           sudo apt install -y python-nose python3-nose
+    - name: Install build dependencies
+      run: |
+           wget https://github.com/bazelbuild/bazel/releases/download/2.2.0/bazel-2.2.0-installer-linux-x86_64.sh
+           chmod +x bazel-2.2.0-installer-linux-x86_64.sh
+           sudo ./bazel-2.2.0-installer-linux-x86_64.sh
+           rm bazel-2.2.0-installer-linux-x86_64.sh 
+    - name: Build
+      run: |
+           bazel build //...
+    - name: Test
+      run: |
+           bazel test //... --test_output=errors
